@@ -9,11 +9,11 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
 class imli():
-    def __init__(self, numPartition=-1, numClause=1, dataFidelity=10, weightFeature=1, solver="open-wbo", ruleType="CNF",
+    def __init__(self, numPartition=-1, numClause=1, dataFidelity=10, weightFeature=1, solver="open-wbo",
+                 ruleType="CNF",
                  workDir="."):
 
-        '''
-
+        """
         :param numPartition: no of partitions of training dataset
         :param numClause: no of clause in the formula
         :param dataFidelity: weight corresponding to accuracy
@@ -22,7 +22,7 @@ class imli():
         :param ruleType: type of rule {CNF,DNF}
         :param workDir: working directory
         :param verbose: True for debug
-        '''
+        """
         self.numPartition = numPartition
         self.numClause = numClause
         self.dataFidelity = dataFidelity
@@ -30,7 +30,7 @@ class imli():
         self.solver = solver
         self.ruleType = ruleType
         self.workDir = workDir
-        self.verbose = False # not necessary
+        self.verbose = False  # not necessary
         self.trainingError = 0
         self.selectedFeatureIndex = []
         self.columns = []
@@ -49,11 +49,11 @@ class imli():
         return self.trainingError
 
     def getSelectedColumnIndex(self):
-        return_list=[[] for i in range(self.numClause)]
-        ySize=len(self.columns)
-        for elem  in self.selectedFeatureIndex:
-            new_index=int(elem)-1
-            return_list[int(new_index/ySize)].append(new_index%ySize)
+        return_list = [[] for i in range(self.numClause)]
+        ySize = len(self.columns)
+        for elem in self.selectedFeatureIndex:
+            new_index = int(elem) - 1
+            return_list[int(new_index / ySize)].append(new_index % ySize)
         return return_list
 
     def getNumOfPartition(self):
@@ -79,7 +79,6 @@ class imli():
 
     def discretize(self, file, categoricalColumnIndex=[], columnSeperator=",", fracPresent=0.9, numThreshold=9):
 
-
         # Quantile probabilities
         quantProb = np.linspace(1. / (numThreshold + 1.), numThreshold / (numThreshold + 1.), numThreshold)
         # List of categorical columns
@@ -97,7 +96,7 @@ class imli():
         if (self.verbose):
             print("before discrertization: ")
             print("features: ", columns)
-            print("index of categorical features: ",categoricalColumnIndex)
+            print("index of categorical features: ", categoricalColumnIndex)
         #
         # if (self.verbose):
         #     print(data.columns)
@@ -194,9 +193,8 @@ class imli():
 
     def fit(self, XTrain, yTrain):
 
-        if(self.numPartition==-1):
-            self.numPartition=2**math.floor(math.log2(len(XTrain)/32))
-
+        if (self.numPartition == -1):
+            self.numPartition = 2 ** math.floor(math.log2(len(XTrain) / 32))
 
         self.trainingError = 0
         self.trainingSize = len(XTrain)
