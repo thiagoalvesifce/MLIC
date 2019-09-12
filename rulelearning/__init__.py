@@ -8,4 +8,6 @@ model = imli()
 
 X, y = model.discretize("iris_bintarget.csv")
 print(X)
+print(len(X[0]))
 print(y)
+print(len(y))
